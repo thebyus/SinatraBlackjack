@@ -27,6 +27,10 @@ helpers do
 	end
 end
 
+before do
+	@show_hit_or_stay = true
+end
+
 get '/home' do
 	if session[:player_name]
 		redirect '/game'
@@ -60,13 +64,22 @@ get '/game' do
 	erb :game
 end
 
-post 'game/player/hit' do
-	#session[:player_cards] << session[:deck].pop
-	#erb :game
-puts "here we are!"
+
+post '/game/player/hit' do
+	session[:player_cards] << session[:deck].pop
+	if calculate_total(session[:player_cards]) > 21
+		@error = "Sorry :( Looks like you have busted!"
+		@show_hit_or_stay =false
+	end
+
+
+	erb :game
+
 end
 
-post 'game/player/stay' do
+post '/game/player/stay' do
+	@success = "You have decided to stay"
+	@show_hit_or_stay = false
 
 	erb :game
 end

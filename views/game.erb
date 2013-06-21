@@ -31,10 +31,12 @@ The Dealer's cards are:
 
 <br>
 
+<%if @show_hit_or_stay %>
 <form action="/game/player/hit" method='post'>
-	<input type="submit" class="btn" value="hit">
+	<input type="submit" class="btn" value="hit" />
 </form>
 <form action="/game/player/stay" method='post'>
-	<input type="submit" class="btn" value="stay">
+	<input type="submit" class="btn" value="stay" />
 </form>
+<% end %>
 </p>

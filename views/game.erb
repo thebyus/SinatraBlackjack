@@ -1,15 +1,33 @@
-<h1>Blackjack!</h1>
+<h1>Welcome to Blackjack!</h1>
 
-<p>Welcome, <%=session[:player_name]%>.</p>
+<p>Hi, <%=session[:player_name]%>.</p>
 <br>
+
+<% if @play_again %>
+<p>
+	<strong>Want to play again?</strong>
+	<a href="/bet" class="btn btn-primary">Yes</a>
+	<a href="/game_over" class="btn">No</a>
+</p>
+<% end %>
 
 <div class="well">
-<h4>The Dealer's cards are:</h4>
-<br>
+	<h4>The Dealer's Cards</h4>
+	<% session[:dealer_cards].each_with_index do |card, i| %>
+		<% if session[:turn] != "dealer" && i == 0 %>
+			<img src='/images/cards/cover.jpg' class='card_image'>
+		<% else %>
+			<%= card_image(card) %>
+		<% end %>
+	<% end %>
 
-
-	<% session[:dealer_cards].each do |card| %>
-		<%= card_image(card) %>
+	<% if @show_dealer_hit == true %>
+	<h5>The Dealer has <%= calculate_total(session[:dealer_cards]) %> and will hit. </h5>
+	<p>	
+		<form id="dealer_hit" action="/game/dealer/hit" method='post'>
+		<input type="submit" class="btn btn-primary" value="Show Dealer's Card" />
+		</form>
+	</p>
 	<% end %>
 
 </div>
@@ -26,7 +44,10 @@
 	<% end %>
 
 
-<h5>Your total is: <%= calculate_total(session[:player_cards]) %></h5>
+<h4>Your total is: <%= calculate_total(session[:player_cards]) %></h4>
+<h4>You have $<%= session[:player_bet] %> bet on this hand.</h4>
+<h4>If you lose you will have $<%= session[:player_pot] - session[:player_bet] %> left in your wallet.</h4>
+
 </div>		
 		
 

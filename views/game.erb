@@ -46,7 +46,7 @@
 
 <h4>Your total is: <%= calculate_total(session[:player_cards]) %></h4>
 <h4>You have $<%= session[:player_bet] %> bet on this hand.</h4>
-<h4>If you lose you will have $<%= session[:player_pot] - session[:player_bet] %> left in your wallet.</h4>
+<h4>If you lose you will have $<%= session[:player_pot].to_i - session[:player_bet].to_i %> left in your wallet.</h4>
 
 </div>		
 		

@@ -110,7 +110,7 @@ end
 
 get '/game' do
 session[:turn] = session[:player_name]
-#@dealer_turn = false
+
 
 	#create deck and put it in session
 	suits = ['hearts', 'clubs', 'diamonds', 'spades']
@@ -137,7 +137,7 @@ post '/game/player/hit' do
 	elsif player_total> BLACKJACK
 		loser!("You have busted with a total of #{player_total}.")
 	end
-	erb :game
+	erb :game, layout: false
 end
 
 post '/game/player/stay' do
@@ -149,7 +149,6 @@ end
 
 get '/game/dealer' do
 	session[:turn] = "dealer"
-	#@dealer_turn = true
 	@show_hit_or_stay = false
 
 	dealer_total = calculate_total(session[:dealer_cards])
